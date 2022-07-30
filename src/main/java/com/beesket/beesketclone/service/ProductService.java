@@ -5,6 +5,10 @@ import com.beesket.beesketclone.dto.ProductResponseDto;
 import com.beesket.beesketclone.model.Product;
 import com.beesket.beesketclone.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,15 +19,18 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
 
-    public ProductResponseDto showProduct(int categoryId) {
+    public ProductResponseDto showProduct(String categoryName, int page) {
         long totalCount;
-        List<Product> products;
-        ProductResponseDto productResponseDtos = new ProductResponseDto();
+        Page<Product> products;
+        ProductResponseDto productResponseDto = new ProductResponseDto();
         List<ProductInformationDto> ProductInformationDtoList = new ArrayList<>();
 
-        if(categoryId == 0){ //All 카테고리
+        Sort sort = Sort.by("id");
+        Pageable pageable = PageRequest.of(page, 15, sort);
+
+        if(categoryName.equals("ALL")){ //All 카테고리
             totalCount = productRepository.count();//제품 전체 개수
-            products = productRepository.findAll();//제품 전체 불어오기
+            products = productRepository.findAll(pageable);//제품 전체 불어오기
 
             for(Product product : products){
                 ProductInformationDto productInformationDto = new ProductInformationDto(
@@ -34,8 +41,8 @@ public class ProductService {
                 ProductInformationDtoList.add(productInformationDto);
             }
         } else {
-            totalCount = productRepository.countAllByCategoryId(categoryId);//카테코리마다 제품 전체 개수
-            products = productRepository.findAllByCategoryId(categoryId);
+            totalCount = productRepository.countAllByCategoryName(categoryName);//카테코리별 제품 전체 개수
+            products = productRepository.findAllByCategoryName(categoryName, pageable);//카테코리별 제품 불어오기
 
             for(Product product : products){
                 ProductInformationDto productInformationDto = new ProductInformationDto(
@@ -46,10 +53,9 @@ public class ProductService {
                 ProductInformationDtoList.add(productInformationDto);
             }
         }
+        productResponseDto.setProductInfo(ProductInformationDtoList);
+        productResponseDto.setTotalCount((int)totalCount);
 
-        productResponseDtos.setProductInfo(ProductInformationDtoList);
-        productResponseDtos.setTotalCount((int)totalCount);
-
-        return productResponseDtos;
+        return productResponseDto;
     }
 }

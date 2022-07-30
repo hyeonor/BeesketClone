@@ -14,7 +14,7 @@ public class Product {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long Id;
+    private Long id;
 
     @Column(nullable = false)
     private String imgUrl; //이미지 URL
@@ -26,5 +26,5 @@ public class Product {
     private int price; //제품 가격
 
     @Column(nullable = false)
-    private int categoryId; //카테고리 번호
+    private String categoryName; //카테고리 이름
 }
