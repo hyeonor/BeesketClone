@@ -27,4 +27,7 @@ public class Product {
 
     @Column(nullable = false)
     private String categoryName; //카테고리 이름
+
+    @Column(nullable = false)
+    private String productDetail; //카테고리 이름
 }

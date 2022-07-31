@@ -1,5 +1,6 @@
 package com.beesket.beesketclone.service;
 
+import com.beesket.beesketclone.dto.ProductDetailDto;
 import com.beesket.beesketclone.dto.ProductInformationDto;
 import com.beesket.beesketclone.dto.ProductResponseDto;
 import com.beesket.beesketclone.model.Product;
@@ -57,5 +58,15 @@ public class ProductService {
         productResponseDto.setTotalCount((int)totalCount);
 
         return productResponseDto;
+    }
+
+    public ProductDetailDto showProductDetail(Long productId) {
+        Product product = productRepository.findAllById(productId);
+
+        return new ProductDetailDto(
+                product.getImgUrl(),
+                product.getProductName(),
+                product.getPrice(),
+                product.getProductDetail());
     }
 }
