@@ -1,4 +1,4 @@
-package com.beesket.beesketclone.exceeption;
+package com.beesket.beesketclone.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
