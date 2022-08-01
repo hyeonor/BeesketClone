@@ -29,4 +29,8 @@ public class BuyProductList {
     @Column(nullable = false)
     private int count;
 
+    @ManyToOne
+    @JoinColumn(name = "basketId")
+    private Basket basket;
+
 }

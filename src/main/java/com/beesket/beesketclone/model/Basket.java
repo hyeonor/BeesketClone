@@ -1,16 +1,16 @@
 package com.beesket.beesketclone.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @AllArgsConstructor
-@Entity
 @NoArgsConstructor
+@Builder
 @Getter
+@Setter
+@Entity
 public class Basket extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Basket extends Timestamped {
 //    private Product product;
 
     @OneToMany(mappedBy = "basket")
-    private List<Product> product;
+    private List<BuyProductList> buyProductList;
 
     @Column(nullable = false)
     private int count;
