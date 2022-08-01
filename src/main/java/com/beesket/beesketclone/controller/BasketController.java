@@ -1,10 +1,12 @@
 package com.beesket.beesketclone.controller;
 
-import com.beesket.beesketclone.dto.BasketDto;
-import com.beesket.beesketclone.dto.BasketListDto;
+import com.beesket.beesketclone.dto.BasketRequestDto;
+import com.beesket.beesketclone.dto.BasketResponseDto;
 import com.beesket.beesketclone.service.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -12,10 +14,16 @@ public class BasketController {
 
     private final BasketService basketService;
 
-    //구매 목록 저장
-    @PostMapping("/product/basketList")
-    public void createBasketList(@RequestBody BasketListDto basketListDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        basketService.createBasketList(basketListDto, userDetails);
+    //장바구니 담기
+    @PostMapping("/product/basket")
+    public void saveBasket(@RequestBody BasketRequestDto basketRequestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        basketService.saveBasket(basketRequestDto, userDetails);
+    }
+
+    //장바구니 조회
+    @GetMapping("/product/basketList")
+    public List<BasketResponseDto> showBasket(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return basketService.showBasket(userDetails);
     }
 
 }
