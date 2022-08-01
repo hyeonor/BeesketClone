@@ -1,7 +1,6 @@
 package com.beesket.beesketclone.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,24 +11,28 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Basket {
+public class Basket extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "productId")
+//    private Product product;
 
     @OneToMany(mappedBy = "basket")
-    private List<BasketList> basketList;
+    private List<Product> product;
+
+    @Column(nullable = false)
+    private int count;
 
     @Column(nullable = false)
     private int deliveryFee;
 
     @Column(nullable = false)
-    private int totalPrice;
+    private int sumPrice;
 
-    public Basket()
+    @Column(nullable = false)
+    private int totalPrice;
 
 }
