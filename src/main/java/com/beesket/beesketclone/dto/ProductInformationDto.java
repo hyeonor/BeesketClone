@@ -1,5 +1,6 @@
 package com.beesket.beesketclone.dto;
 
+import com.beesket.beesketclone.model.Product;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,10 +12,10 @@ public class ProductInformationDto {
     private String productName;
     private int price;
 
-    public ProductInformationDto(Long id, String imgUrl, String productName, int price) {
-        this.id = id;
-        this.imgUrl = imgUrl;
-        this.productName = productName;
-        this.price = price;
+    public ProductInformationDto(Product product) {
+        this.id = product.getId();
+        this.imgUrl = product.getImgUrl();
+        this.productName = product.getProductName();
+        this.price = product.getPrice();
     }
 }

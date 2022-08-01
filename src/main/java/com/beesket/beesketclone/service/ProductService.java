@@ -34,11 +34,7 @@ public class ProductService {
             products = productRepository.findAll(pageable);//제품 전체 불어오기
 
             for(Product product : products){
-                ProductInformationDto productInformationDto = new ProductInformationDto(
-                        product.getId(),
-                        product.getImgUrl(),
-                        product.getProductName(),
-                        product.getPrice());
+                ProductInformationDto productInformationDto = new ProductInformationDto(product);
 
                 ProductInformationDtoList.add(productInformationDto);
             }
@@ -47,11 +43,7 @@ public class ProductService {
             products = productRepository.findAllByCategoryName(categoryName, pageable);//카테코리별 제품 불어오기
 
             for(Product product : products){
-                ProductInformationDto productInformationDto = new ProductInformationDto(
-                        product.getId(),
-                        product.getImgUrl(),
-                        product.getProductName(),
-                        product.getPrice());
+                ProductInformationDto productInformationDto = new ProductInformationDto(product);
 
                 ProductInformationDtoList.add(productInformationDto);
             }

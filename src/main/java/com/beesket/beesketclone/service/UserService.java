@@ -36,7 +36,7 @@ public class UserService {
         //회원가입 조건
         String pattern = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
         if(!Pattern.matches(pattern, email)){
-            return "이메일을 정확히 입력하세요.";
+            throw new IllegalArgumentException("이메일을 정확히 입력하세요.");
         } else if (!password.equals(password2)){
             return "비밀번호가 일치하지 않습니다.";
         } else if (password.length() < 4) {
