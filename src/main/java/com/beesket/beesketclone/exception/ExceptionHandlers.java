@@ -1,4 +1,4 @@
-package com.beesket.beesketclone.exceeption;
+package com.beesket.beesketclone.exception;
 
 
 

@@ -2,8 +2,8 @@ package com.beesket.beesketclone.service;
 
 import com.beesket.beesketclone.dto.LoginRequestDto;
 import com.beesket.beesketclone.dto.SignupRequestDto;
-import com.beesket.beesketclone.exceeption.CustomException;
-import com.beesket.beesketclone.exceeption.ErrorCode;
+import com.beesket.beesketclone.exception.CustomException;
+import com.beesket.beesketclone.exception.ErrorCode;
 import com.beesket.beesketclone.model.User;
 import com.beesket.beesketclone.repository.UserRepository;
 import com.beesket.beesketclone.security.UserDetailsImpl;
@@ -72,9 +72,10 @@ public class UserService {
     }
 
     public User userInfo(UserDetailsImpl userDetails) {
+        Long id = userDetails.getUser().getId();
         String email = userDetails.getUser().getEmail();
         String name = userDetails.getUser().getName();
-        User userInfo = new User(email, name);
+        User userInfo = new User(id, email, name);
         return userInfo;
     }
 
