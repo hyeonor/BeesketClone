@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
 @Setter
@@ -15,6 +17,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comment> comment = new ArrayList<>();
 
     @Column(nullable = false)
     private String imgUrl; //이미지 URL
@@ -30,4 +35,9 @@ public class Product {
 
     @Column(nullable = false)
     private String productDetail; //카테고리 이름
+
+    // Product에서 Comment에 대한 정보 넣기.
+    public void addComment(Comment comment) {
+        this.comment.add(comment);
+    }
 }
