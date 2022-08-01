@@ -30,7 +30,7 @@ public class UserService {
         //회원 email 중복 확인
         Optional<User> found = userRepository.findByEmail(email);
         if(found.isPresent()){
-            return "중복된 email 입니다.";
+            throw new IllegalArgumentException("중복된 email 입니다.");
         }
 
         //회원가입 조건
@@ -71,9 +71,10 @@ public class UserService {
     }
 
     public User userInfo(UserDetailsImpl userDetails) {
+        Long id = userDetails.getUser().getId();
         String email = userDetails.getUser().getEmail();
         String name = userDetails.getUser().getName();
-        User userInfo = new User(email, name);
+        User userInfo = new User(id, email, name);
         return userInfo;
     }
 

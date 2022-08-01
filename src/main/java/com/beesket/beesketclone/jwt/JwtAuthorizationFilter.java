@@ -13,7 +13,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
@@ -49,7 +48,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 
         //JWT토큰을 검증을 해서 정상적인 사용자인지 확인
-//        String jwtToken = request.getHeader("Authorization").replace("Bearer","");
+        //String jwtToken = request.getHeader("Authorization").replace("Bearer","");
         String email =
                 JWT.require(Algorithm.HMAC512("cos")).build().verify(jwtHeader).getClaim("email").asString();
 
@@ -73,6 +72,4 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         }
         chain.doFilter(request,response);
     }
-
-
 }
