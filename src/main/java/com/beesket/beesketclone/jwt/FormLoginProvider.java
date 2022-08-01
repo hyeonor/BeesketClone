@@ -20,6 +20,7 @@ public class FormLoginProvider implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        System.out.println("provider를 거침ㅋ");
         String email = (String)authentication.getPrincipal();
         String password = (String)authentication.getCredentials();
 

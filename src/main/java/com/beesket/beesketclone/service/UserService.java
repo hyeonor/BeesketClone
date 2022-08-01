@@ -2,6 +2,8 @@ package com.beesket.beesketclone.service;
 
 import com.beesket.beesketclone.dto.LoginRequestDto;
 import com.beesket.beesketclone.dto.SignupRequestDto;
+import com.beesket.beesketclone.exceeption.CustomException;
+import com.beesket.beesketclone.exceeption.ErrorCode;
 import com.beesket.beesketclone.model.User;
 import com.beesket.beesketclone.repository.UserRepository;
 import com.beesket.beesketclone.security.UserDetailsImpl;
@@ -25,22 +27,21 @@ public class UserService {
         String password = requestDto.getPassword();
         String password2 = requestDto.getPassword2();
         String name = requestDto.getName();
-
+        String pattern = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
 
         //회원 email 중복 확인
         Optional<User> found = userRepository.findByEmail(email);
         if(found.isPresent()){
-            return "중복된 email 입니다.";
+            throw new CustomException(ErrorCode.EMAIL_DUPLICATION_CODE);
         }
 
         //회원가입 조건
-        String pattern = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$";
         if(!Pattern.matches(pattern, email)){
-            return "이메일을 정확히 입력하세요.";
+            throw new CustomException(ErrorCode.EMAIL_FORM_CODE);
         } else if (!password.equals(password2)){
-            return "비밀번호가 일치하지 않습니다.";
+            throw new CustomException(ErrorCode.PASSWORD_CHECK_CODE);
         } else if (password.length() < 4) {
-            return "비밀번호를 4자 이상 입력하세요.";
+            throw new CustomException(ErrorCode.PASSWORD_LENGTH_CODE);
         }
 
 
