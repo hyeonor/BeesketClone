@@ -1,6 +1,7 @@
 package com.beesket.beesketclone.service;
 
 import com.beesket.beesketclone.dto.CommentRequestDto;
+import com.beesket.beesketclone.dto.CommentResponseDto;
 import com.beesket.beesketclone.model.Comment;
 import com.beesket.beesketclone.model.Product;
 import com.beesket.beesketclone.model.User;
@@ -11,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -32,5 +36,17 @@ public class CommentService {
         int scope = commentRequestDto.getScope();
 
         commentRepository.save(Comment.createComment(user, content, product, scope));
+    }
+
+    public List<CommentResponseDto> listComment(Long productId) {
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
+        List<Comment> commentList = commentRepository.findAllByProductIdOrderByCreatedAtDesc(productId);
+
+        for (Comment comment : commentList) {
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            commentResponseDtoList.add(commentResponseDto);
+        }
+        return commentResponseDtoList;
     }
 }
