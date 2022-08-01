@@ -8,6 +8,7 @@ import com.beesket.beesketclone.repository.CommentRepository;
 import com.beesket.beesketclone.repository.ProductRepository;
 import com.beesket.beesketclone.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +29,8 @@ public class CommentService {
                 .orElseThrow(() -> new UsernameNotFoundException("다시 로그인해 주세요."));
 
         String content = commentRequestDto.getContent();
+        int scope = commentRequestDto.getScope();
 
-        commentRepository.save(Comment.createComment(user, content, product));
+        commentRepository.save(Comment.createComment(user, content, product, scope));
     }
 }

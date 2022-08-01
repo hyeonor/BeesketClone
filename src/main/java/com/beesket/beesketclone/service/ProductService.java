@@ -35,6 +35,7 @@ public class ProductService {
 
             for(Product product : products){
                 ProductInformationDto productInformationDto = new ProductInformationDto(
+                        product.getId(),
                         product.getImgUrl(),
                         product.getProductName(),
                         product.getPrice());
@@ -47,6 +48,7 @@ public class ProductService {
 
             for(Product product : products){
                 ProductInformationDto productInformationDto = new ProductInformationDto(
+                        product.getId(),
                         product.getImgUrl(),
                         product.getProductName(),
                         product.getPrice());

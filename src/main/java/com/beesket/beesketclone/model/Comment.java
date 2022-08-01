@@ -21,6 +21,9 @@ public class Comment{
     @Column
     private String content;
 
+    @Column
+    private int scope;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -29,10 +32,11 @@ public class Comment{
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private Comment(User user, String content, Product product) {
+    private Comment(User user, String content, Product product, int scope) {
         this.user = user;
-        this.product = product;
         this.content = content;
+        this.product = product;
+        this.scope = scope;
     }
 
     public void addCommentToPost(Product Product) {
@@ -40,9 +44,9 @@ public class Comment{
     }
 
     // Comment 생성
-    public static Comment createComment(User user, String content, Product post) {
-        Comment comment = new Comment(user, content, post);
-        comment.addCommentToPost(post);
+    public static Comment createComment(User user, String content, Product product, int scope) {
+        Comment comment = new Comment(user, content, product, scope);
+        comment.addCommentToPost(product);
         return comment;
     }
 }
