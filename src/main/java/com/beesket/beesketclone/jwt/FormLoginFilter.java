@@ -80,5 +80,16 @@ public class FormLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         response.addHeader("Authorization", jwtToken);
     }
+
+
+    //로그인 예외처리
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        System.out.println(failed.getMessage());
+        response.setStatus(400);
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(failed.getMessage());
+
+    }
 }
 
