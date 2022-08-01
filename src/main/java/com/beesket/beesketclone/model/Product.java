@@ -18,7 +18,7 @@ public class Product {
     @Id
     private Long id;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comment = new ArrayList<>();
 
     @Column(nullable = false)
