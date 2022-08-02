@@ -31,7 +31,7 @@ public class CommentController {
     }
 
     // 댓글리스트
-    @GetMapping("posts/{productId}/comment")
+    @GetMapping("product/{productId}/comment")
     public ResponseEntity<CommentWrapper<List<CommentResponseDto>>> listComment(@PathVariable Long productId) {
         List<CommentResponseDto> dtoList = commentService.listComment(productId);
         return ResponseEntity.status(HttpStatus.OK)
