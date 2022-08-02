@@ -1,6 +1,8 @@
 package com.beesket.beesketclone.service;
 
-import com.beesket.beesketclone.dto.BasketRequestDto;
+import com.beesket.beesketclone.dto.BasketProductDto;
+import com.beesket.beesketclone.dto.BasketResponseDto;
+import com.beesket.beesketclone.model.Basket;
 import com.beesket.beesketclone.model.BuyProductList;
 import com.beesket.beesketclone.model.Product;
 import com.beesket.beesketclone.model.User;
@@ -28,26 +30,26 @@ public class BasketService {
 
     //장바구니 담기
     @Transactional
-    public void saveBasket(BasketRequestDto basketRequestDto, UserDetailsImpl userDetails) {
+    public void saveBasket(BasketProductDto basketProductDto, UserDetailsImpl userDetails) {
 
         User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("회원이 존재하지 않습니다.")
         );
 
-        Product product = productRepository.findById(basketRequestDto.getProductId()).orElseThrow(
+        Product product = productRepository.findById(basketProductDto.getProductId()).orElseThrow(
                 () -> new IllegalArgumentException("상품이 존재하지 않습니다.")
         );
 
-        Optional<BuyProductList> find = buyProductListRepository.findByProduct_IdAndUser_Id(basketRequestDto.getProductId(),user.getId());
+        Optional<BuyProductList> find = buyProductListRepository.findByProduct_IdAndUser_Id(basketProductDto.getProductId(),user.getId());
 
         if (find.isPresent()){
-            find.get().setCount(basketRequestDto.getCount()+find.get().getCount());
+            find.get().setCount(basketProductDto.getCount()+find.get().getCount());
         } else {
             BuyProductList buyProductList = BuyProductList.builder()
                     .user(user)
                     .product(product)
-                    .email(user.getEmail())
-                    .count(basketRequestDto.getCount())
+//                    .email(user.getEmail())
+                    .count(basketProductDto.getCount())
                     .build();
 
             buyProductListRepository.save(buyProductList);
@@ -55,12 +57,44 @@ public class BasketService {
 
     }
 
-//    public List<BasketResponseDto> showBasket(UserDetailsImpl userDetails) {
-//
-//        User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(
-//                () -> new IllegalArgumentException("회원이 존재하지 않습니다.")
-//        );
-//
-//    }
+    //장바구니 조회
+    public BasketResponseDto basketList(UserDetailsImpl userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(
+                () -> new NullPointerException("회원이 존재하지 않습니다.")
+        );
 
+        List<BuyProductList> buyProductList = buyProductListRepository.findByUser_Id(user.getId());
+
+        int deliverFee = 0;
+        int sumPrice = 0;
+
+        for (BuyProductList list : buyProductList) {
+            int price = list.getProduct().getPrice();
+            int count = list.getCount();
+            int sum = price * count;
+            sumPrice += sum;
+        }
+
+        if (sumPrice < 70000) {
+            deliverFee += 3000;
+        }
+
+        Basket basket = Basket.builder()
+                .user(user)
+                .buyProductList(buyProductList)
+                .sumPrice(sumPrice)
+                .deliveryFee(deliverFee)
+                .build();
+
+        Basket findId = basketRepository.findByUser_Id(user.getId());
+
+        if (findId == null) {
+            basketRepository.save(basket);
+        }else {
+            basket.setBuyProductList(basket.getBuyProductList());
+            basket.setDeliveryFee(basket.getDeliveryFee());
+            basket.setSumPrice(basket.getSumPrice());
+        }
+        return new BasketResponseDto(basket);
+    }
 }
