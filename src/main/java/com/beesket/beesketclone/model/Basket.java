@@ -14,7 +14,7 @@ import java.util.List;
 public class Basket extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long basketId;
 
     @OneToOne
     @JoinColumn(name = "userId")
