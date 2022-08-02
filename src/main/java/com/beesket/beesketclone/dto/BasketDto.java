@@ -8,5 +8,5 @@ import lombok.Getter;
 @Getter
 public class BasketDto {
     private Product product;
-    private int count;
+    private int deliveryFee;
 }

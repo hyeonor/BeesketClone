@@ -27,7 +27,7 @@ public class BasketResponseDto {
         for(BuyProductList buyProductList : basket.getBuyProductList()){
             BasketDto basketDto = BasketDto.builder()
                     .product(buyProductList.getProduct())
-                    .count(buyProductList.getCount())
+                    .deliveryFee(buyProductList.getBasket().getDeliveryFee())
                     .build();
             basketDtoList.add(basketDto);
         }
