@@ -20,7 +20,7 @@ public class BasketController {
         basketService.saveBasket(basketProductDto, userDetails);
     }
 
-//    장바구니 조회
+    //장바구니 조회
     @GetMapping("/product/basketList")
     public BasketResponseDto basketList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return basketService.basketList(userDetails);

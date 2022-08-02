@@ -1,5 +1,6 @@
 package com.beesket.beesketclone.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,12 +16,12 @@ public class BuyProductList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "userId")
-    private User user;
+//    @OneToOne
+//    @JoinColumn(name = "userId")
+//    private User user;
 
-    @Column(nullable = false)
-    private String email;
+//    @Column(nullable = false)
+//    private String email;
 
     @OneToOne
     @JoinColumn(name = "productId")
@@ -29,6 +30,7 @@ public class BuyProductList {
     @Column(nullable = false)
     private int count;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "basketId")
     private Basket basket;

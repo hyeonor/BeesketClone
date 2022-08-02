@@ -32,6 +32,20 @@ public class BasketService {
     @Transactional
     public void saveBasket(BasketProductDto basketProductDto, UserDetailsImpl userDetails) {
 
+        Basket basket = basketRepository.findByUser_Id(userDetails.getUser().getId()); //나중에 예외처리 하기
+
+        if(basket == null){
+            basket = Basket.builder()
+                    .user(userDetails.getUser())
+                    .buyProductList(null)
+                    .count(0)
+                    .deliveryFee(0)
+                    .sumPrice(0)
+                    .build();
+
+            basketRepository.save(basket);
+        }
+
         User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("회원이 존재하지 않습니다.")
         );
@@ -46,7 +60,7 @@ public class BasketService {
             find.get().setCount(basketProductDto.getCount()+find.get().getCount());
         } else {
             BuyProductList buyProductList = BuyProductList.builder()
-                    .user(user)
+                    .basket(basket)
                     .product(product)
 //                    .email(user.getEmail())
                     .count(basketProductDto.getCount())
@@ -63,14 +77,18 @@ public class BasketService {
                 () -> new NullPointerException("회원이 존재하지 않습니다.")
         );
 
-        List<BuyProductList> buyProductList = buyProductListRepository.findByUser_Id(user.getId());
+        Basket basket = basketRepository.findByUser_Id(userDetails.getUser().getId());
+
+        List<BuyProductList> buyProductList = buyProductListRepository.findByBasket(basket);
 
         int deliverFee = 0;
         int sumPrice = 0;
+        int allCount = 0;
 
         for (BuyProductList list : buyProductList) {
             int price = list.getProduct().getPrice();
             int count = list.getCount();
+            allCount += count;
             int sum = price * count;
             sumPrice += sum;
         }
@@ -79,22 +97,26 @@ public class BasketService {
             deliverFee += 3000;
         }
 
-        Basket basket = Basket.builder()
-                .user(user)
-                .buyProductList(buyProductList)
-                .sumPrice(sumPrice)
-                .deliveryFee(deliverFee)
-                .build();
+//        basket = Basket.builder()
+//                .user(user)
+//                .buyProductList(buyProductList)
+//                .sumPrice(sumPrice)
+//                .deliveryFee(deliverFee)
+//                .build();
+        basket.setCount(allCount);
+        basket.setSumPrice(sumPrice);
+        basket.setDeliveryFee(deliverFee);
+        basket.setBuyProductList(buyProductList);
 
-        Basket findId = basketRepository.findByUser_Id(user.getId());
-
-        if (findId == null) {
-            basketRepository.save(basket);
-        }else {
-            basket.setBuyProductList(basket.getBuyProductList());
-            basket.setDeliveryFee(basket.getDeliveryFee());
-            basket.setSumPrice(basket.getSumPrice());
-        }
+//        Basket findId = basketRepository.findByUser_Id(user.getId());
+//
+//        if (findId == null) {
+//            basketRepository.save(basket);
+//        }else {
+//            basket.setBuyProductList(basket.getBuyProductList());
+//            basket.setDeliveryFee(basket.getDeliveryFee());
+//            basket.setSumPrice(basket.getSumPrice());
+//        }
         return new BasketResponseDto(basket);
     }
 }
