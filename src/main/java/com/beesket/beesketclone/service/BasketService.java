@@ -12,6 +12,7 @@ import com.beesket.beesketclone.repository.ProductRepository;
 import com.beesket.beesketclone.repository.UserRepository;
 import com.beesket.beesketclone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Component //class를 bean으로 만듦
 @Service
 @RequiredArgsConstructor
 public class BasketService {
@@ -54,10 +56,10 @@ public class BasketService {
                 () -> new IllegalArgumentException("상품이 존재하지 않습니다.")
         );
 
-        Optional<BuyProductList> find = buyProductListRepository.findByProduct_IdAndUser_Id(basketProductDto.getProductId(),user.getId());
+        BuyProductList find = buyProductListRepository.findByProduct_IdAndBasket(basketProductDto.getProductId(),basket);
 
-        if (find.isPresent()){
-            find.get().setCount(basketProductDto.getCount()+find.get().getCount());
+        if (find != null){
+            find.setCount(basketProductDto.getCount()+find.getCount());
         } else {
             BuyProductList buyProductList = BuyProductList.builder()
                     .basket(basket)
@@ -78,6 +80,18 @@ public class BasketService {
         );
 
         Basket basket = basketRepository.findByUser_Id(userDetails.getUser().getId());
+//  회원이 아닐 때
+        if(basket == null){
+            basket = Basket.builder()
+                    .user(userDetails.getUser())
+                    .buyProductList(null)
+                    .count(0)
+                    .deliveryFee(0)
+                    .sumPrice(0)
+                    .build();
+
+            basketRepository.save(basket);
+        }
 
         List<BuyProductList> buyProductList = buyProductListRepository.findByBasket(basket);
 
@@ -96,7 +110,6 @@ public class BasketService {
         if (sumPrice < 70000) {
             deliverFee += 3000;
         }
-
 //        basket = Basket.builder()
 //                .user(user)
 //                .buyProductList(buyProductList)

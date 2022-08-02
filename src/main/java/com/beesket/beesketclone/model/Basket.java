@@ -12,7 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Basket extends Timestamped {
+public class Basket{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

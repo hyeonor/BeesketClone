@@ -2,6 +2,7 @@ package com.beesket.beesketclone.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.mapping.ToOne;
 
 import javax.persistence.*;
 
@@ -23,7 +24,7 @@ public class BuyProductList {
 //    @Column(nullable = false)
 //    private String email;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "productId")
     private Product product;
 

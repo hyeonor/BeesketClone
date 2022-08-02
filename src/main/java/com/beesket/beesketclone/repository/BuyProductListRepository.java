@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface BuyProductListRepository extends JpaRepository<BuyProductList, Long> {
 //    List<BuyProductList> findByUser_Id(Long userId);
-    Optional<BuyProductList> findByProduct_IdAndUser_Id(Long productId, Long userId);
+    BuyProductList findByProduct_IdAndBasket(Long productId, Basket basket);
 
     List<BuyProductList> findByBasket(Basket basket);
 }
