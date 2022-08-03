@@ -1,5 +1,6 @@
 package com.beesket.beesketclone.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.AccessLevel;
@@ -28,6 +29,7 @@ public class Comment extends Timestamped{
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

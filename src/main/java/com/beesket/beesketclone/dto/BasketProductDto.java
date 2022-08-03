@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class BasketProductDto {
     private Long productId;
-//    private String email;
     private int count;
 }

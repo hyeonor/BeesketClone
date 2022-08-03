@@ -23,10 +23,11 @@ public class BasketController {
         return new ResponseEntity("장바구니가 담겼습니다.", HttpStatus.OK);
     }
 
-    //장바구니 조회
+    //장바구니 조회 및 저장
     @GetMapping("/product/basketList")
-    public BasketResponseDto basketList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return basketService.basketList(userDetails);
+    public ResponseEntity basketList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        BasketResponseDto basketResponseDto = basketService.basketList(userDetails);
+        return new ResponseEntity(basketResponseDto, HttpStatus.OK);
     }
 
 }

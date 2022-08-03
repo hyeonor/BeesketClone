@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
-import java.util.Optional;
 
 @Component //class를 bean으로 만듦
 @Service
@@ -64,7 +63,6 @@ public class BasketService {
             BuyProductList buyProductList = BuyProductList.builder()
                     .basket(basket)
                     .product(product)
-//                    .email(user.getEmail())
                     .count(basketProductDto.getCount())
                     .build();
 
@@ -73,7 +71,8 @@ public class BasketService {
 
     }
 
-    //장바구니 조회
+    //장바구니 조회 및 저장
+    @Transactional
     public BasketResponseDto basketList(UserDetailsImpl userDetails) {
         User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(
                 () -> new NullPointerException("회원이 존재하지 않습니다.")
@@ -110,26 +109,12 @@ public class BasketService {
         if (sumPrice < 70000) {
             deliverFee += 3000;
         }
-//        basket = Basket.builder()
-//                .user(user)
-//                .buyProductList(buyProductList)
-//                .sumPrice(sumPrice)
-//                .deliveryFee(deliverFee)
-//                .build();
+
         basket.setCount(allCount);
         basket.setSumPrice(sumPrice);
         basket.setDeliveryFee(deliverFee);
         basket.setBuyProductList(buyProductList);
 
-//        Basket findId = basketRepository.findByUser_Id(user.getId());
-//
-//        if (findId == null) {
-//            basketRepository.save(basket);
-//        }else {
-//            basket.setBuyProductList(basket.getBuyProductList());
-//            basket.setDeliveryFee(basket.getDeliveryFee());
-//            basket.setSumPrice(basket.getSumPrice());
-//        }
         return new BasketResponseDto(basket);
     }
 }

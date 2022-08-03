@@ -13,16 +13,16 @@ import java.util.List;
 @Setter
 public class BasketResponseDto {
     private Long basketId;
-    private User user;
+//    private User user;
     private List<BuyProductList> buyProductList;
     private int deliveryFee;
-    private int sumPrice;
+//    private int sumPrice;
 
     public BasketResponseDto(Basket basket){
         this.setBasketId(basket.getId());
-        this.setUser(basket.getUser());
+//        this.setUser(basket.getUser());
         this.setDeliveryFee(basket.getDeliveryFee());
-        this.setSumPrice(basket.getSumPrice());
+//        this.setSumPrice(basket.getSumPrice());
         this.setBuyProductList(basket.getBuyProductList());
     }
 

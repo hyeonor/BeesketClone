@@ -5,12 +5,9 @@ import com.beesket.beesketclone.model.BuyProductList;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BuyProductListRepository extends JpaRepository<BuyProductList, Long> {
-//    List<BuyProductList> findByUser_Id(Long userId);
     BuyProductList findByProduct_IdAndBasket(Long productId, Basket basket);
-
     List<BuyProductList> findByBasket(Basket basket);
 }
 
