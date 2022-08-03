@@ -57,15 +57,15 @@ public class UserService {
     }
 
     //로그인
-    public Boolean login(LoginRequestDto loginRequestDto){
+    public Boolean login(LoginRequestDto loginRequestDto) {
         User user = userRepository.findByEmail(loginRequestDto.getEmail())
                 .orElse(null);
 
-        if(user != null){
-            if(passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())){
+        if (user != null) {
+            if (passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
                 return false;
             }
-        } else{
+        } else {
             return false;
         }
         return true;

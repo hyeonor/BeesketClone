@@ -22,15 +22,15 @@ public class UserController {
 
     //회원가입 요청 처리
     @PostMapping("/user/signup")
-    public String registerUser(@Valid @RequestBody SignupRequestDto requestDto){
+    public String registerUser(@Valid @RequestBody SignupRequestDto requestDto) {
         String res = userService.registerUser(requestDto);
-        if(res.equals("")){
+        if (res.equals("")) {
             return "회원가입 성공";
-        }else{
+        } else {
             return res;
         }
-
     }
+
     @GetMapping("user/login/auth")
     public User userDetails(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.userInfo(userDetails);

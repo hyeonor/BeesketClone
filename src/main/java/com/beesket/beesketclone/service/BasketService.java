@@ -2,6 +2,7 @@ package com.beesket.beesketclone.service;
 
 import com.beesket.beesketclone.dto.BasketRequestDto;
 import com.beesket.beesketclone.dto.BasketResponseDto;
+import com.beesket.beesketclone.exception.CustomException;
 import com.beesket.beesketclone.model.*;
 import com.beesket.beesketclone.repository.*;
 import com.beesket.beesketclone.security.UserDetailsImpl;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.Objects;
 
 @Component //class를 bean으로 만듦
 @Service
@@ -52,7 +54,7 @@ public class BasketService {
 
         BuyProductList find = buyProductListRepository.findByProduct_IdAndBasket(basketRequestDto.getProductId(),basket);
 
-        Image image = imageRepository.findOneByProduct(product);
+        List<Image> image = imageRepository.findAllByProductId(product.getId());
 
         if (find != null){
             find.setCount(basketRequestDto.getCount()+find.getCount());
@@ -60,13 +62,12 @@ public class BasketService {
             BuyProductList buyProductList = BuyProductList.builder()
                     .basket(basket)
                     .product(product)
-                    .imgUrl(image.getImgUrl())
+                    .imgUrl(image.get(0).getImgUrl())
                     .count(basketRequestDto.getCount())
                     .build();
 
             buyProductListRepository.save(buyProductList);
         }
-
     }
 
     //장바구니 조회 및 저장
@@ -77,7 +78,8 @@ public class BasketService {
         );
 
         Basket basket = basketRepository.findByUser_Id(userDetails.getUser().getId());
-//  회원이 아닐 때
+
+        // 회원이 아닐 때
         if(basket == null){
             basket = Basket.builder()
                     .user(userDetails.getUser())
@@ -116,5 +118,24 @@ public class BasketService {
         basket.setBuyProductList(buyProductList);
 
         return new BasketResponseDto(basket);
+    }
+
+    //장바구니 전체 삭제
+    @Transactional
+    public void deleteBasket(UserDetailsImpl userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(
+                () -> new NullPointerException("회원이 존재하지 않습니다.")
+        );
+
+        Basket basket = basketRepository.findByUser_Id(user.getId());
+        List<BuyProductList> items = basket.getBuyProductList();
+
+        basket.setBuyProductList(null);
+
+        for (BuyProductList buyProductList : items){
+            buyProductListRepository.deleteById(buyProductList.getId());
+        }
+
+        basketRepository.delete(basket);
     }
 }

@@ -2,6 +2,7 @@ package com.beesket.beesketclone.controller;
 
 import com.beesket.beesketclone.dto.BasketRequestDto;
 import com.beesket.beesketclone.dto.BasketResponseDto;
+import com.beesket.beesketclone.model.Basket;
 import com.beesket.beesketclone.security.UserDetailsImpl;
 import com.beesket.beesketclone.service.BasketService;
 import lombok.RequiredArgsConstructor;
@@ -31,4 +32,10 @@ public class BasketController {
         return ResponseEntity.ok().body(basketResponseDto);
     }
 
+    //장바구니 전체 삭제
+    @DeleteMapping("/product/basketList")
+    public ResponseEntity<String> deleteBasket(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        basketService.deleteBasket(userDetails);
+        return ResponseEntity.status(HttpStatus.CREATED).body("장바구니 삭제 되었습니다.");
+    }
 }

@@ -30,7 +30,7 @@ public class CommentController {
                 .body(null);
     }
 
-    // 댓글리스트
+    // 댓글리스트 조회
     @GetMapping("product/{productId}/comment")
     public ResponseEntity<CommentWrapper<List<CommentResponseDto>>> listComment(@PathVariable Long productId) {
         List<CommentResponseDto> commentList = commentService.listComment(productId);
