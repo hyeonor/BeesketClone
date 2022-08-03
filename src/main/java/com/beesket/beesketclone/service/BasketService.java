@@ -2,14 +2,8 @@ package com.beesket.beesketclone.service;
 
 import com.beesket.beesketclone.dto.BasketRequestDto;
 import com.beesket.beesketclone.dto.BasketResponseDto;
-import com.beesket.beesketclone.model.Basket;
-import com.beesket.beesketclone.model.BuyProductList;
-import com.beesket.beesketclone.model.Product;
-import com.beesket.beesketclone.model.User;
-import com.beesket.beesketclone.repository.BasketRepository;
-import com.beesket.beesketclone.repository.BuyProductListRepository;
-import com.beesket.beesketclone.repository.ProductRepository;
-import com.beesket.beesketclone.repository.UserRepository;
+import com.beesket.beesketclone.model.*;
+import com.beesket.beesketclone.repository.*;
 import com.beesket.beesketclone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -28,6 +22,7 @@ public class BasketService {
     private final ProductRepository productRepository;
     private final BasketRepository basketRepository;
     private final BuyProductListRepository buyProductListRepository;
+    private final ImageRepository imageRepository;
 
     //장바구니 담기
     @Transactional
@@ -57,12 +52,15 @@ public class BasketService {
 
         BuyProductList find = buyProductListRepository.findByProduct_IdAndBasket(basketRequestDto.getProductId(),basket);
 
+        Image image = imageRepository.findOneByProductId(product.getId());
+
         if (find != null){
             find.setCount(basketRequestDto.getCount()+find.getCount());
         } else {
             BuyProductList buyProductList = BuyProductList.builder()
                     .basket(basket)
                     .product(product)
+                    .imgUrl(image.getImgUrl())
                     .count(basketRequestDto.getCount())
                     .build();
 
