@@ -2,15 +2,13 @@ package com.beesket.beesketclone.model;
 
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,7 +34,8 @@ public class User extends Timestamped{
         this.name = name;
     }
 
-    public User(String email, String name) {
+    public User(Long id, String email, String name) {
+        this.id = id;
         this.email = email;
         this.name = name;
     }

@@ -36,7 +36,4 @@ public class UserController {
     public User userDetails(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.userInfo(userDetails);
     }
-
-
-
 }
