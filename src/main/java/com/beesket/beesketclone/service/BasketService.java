@@ -52,7 +52,7 @@ public class BasketService {
 
         BuyProductList find = buyProductListRepository.findByProduct_IdAndBasket(basketRequestDto.getProductId(),basket);
 
-        Image image = imageRepository.findOneByProductId(product.getId());
+        Image image = imageRepository.findOneByProduct(product);
 
         if (find != null){
             find.setCount(basketRequestDto.getCount()+find.getCount());
