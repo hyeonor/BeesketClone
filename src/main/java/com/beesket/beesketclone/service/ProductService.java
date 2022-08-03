@@ -25,51 +25,45 @@ public class ProductService {
 
     public ProductResponseDto showProduct(String categoryName, int page) {
         long totalCount;
-        Long productId;
         Page<Product> products;
         ProductResponseDto productResponseDto = new ProductResponseDto();
         List<ProductInformationDto> ProductInformationDtoList = new ArrayList<>();
 
 
-        Sort sort = Sort.by("id");
-        Pageable pageable = PageRequest.of(page, 15, sort);
+        Sort sort = Sort.by("id");//productId로 오름차순으로 정렬
+        Pageable pageable = PageRequest.of(page, 15, sort);//한 페이지당 상품 15개, productId로 정렬
 
         if(categoryName.equals("ALL")) { //All 카테고리
             totalCount = productRepository.count();//제품 전체 개수
             products = productRepository.findAll(pageable);//제품 전체 불어오기
 
-            for(Product product : products) {
-                productId = product.getId();
-                List<Image> images = imageRepository.findAllByProductId(productId);
-                List<String> imageDtoList = new ArrayList<>();
+            getProduct(products, ProductInformationDtoList);
 
-                for (Image image : images) {
-                    imageDtoList.add(image.getImgUrl());
-                }
-                ProductInformationDto productInformationDto = new ProductInformationDto(product, imageDtoList);
-                ProductInformationDtoList.add(productInformationDto);
-            }
         } else {
             totalCount = productRepository.countAllByCategoryName(categoryName);//카테코리별 제품 전체 개수
             products = productRepository.findAllByCategoryName(categoryName, pageable);//카테코리별 제품 불어오기
 
-            for(Product product : products){
-                productId = product.getId();
-                List<Image> images = imageRepository.findAllByProductId(productId);
-                List<String> imageDtoList = new ArrayList<>();
-
-                for (Image image : images) {
-                    imageDtoList.add(image.getImgUrl());
-                }
-
-                ProductInformationDto productInformationDto = new ProductInformationDto(product, imageDtoList);
-                ProductInformationDtoList.add(productInformationDto);
-            }
+            getProduct(products, ProductInformationDtoList);
         }
         productResponseDto.setProductInfo(ProductInformationDtoList);
         productResponseDto.setTotalCount((int)totalCount);
 
         return productResponseDto;
+    }
+
+    private void getProduct(Page<Product> products, List<ProductInformationDto> ProductInformationDtoList) {
+
+        for(Product product : products) {
+            Long productId = product.getId();
+            List<Image> images = imageRepository.findAllByProductId(productId);
+            List<String> imageDtoList = new ArrayList<>();
+
+            for (Image image : images) {
+                imageDtoList.add(image.getImgUrl());
+            }
+            ProductInformationDto productInformationDto = new ProductInformationDto(product, imageDtoList);
+            ProductInformationDtoList.add(productInformationDto);
+        }
     }
 
     public ProductDetailDto showProductDetail(Long productId) {
