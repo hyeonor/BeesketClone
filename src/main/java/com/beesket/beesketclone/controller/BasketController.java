@@ -24,7 +24,7 @@ public class BasketController {
         return ResponseEntity.status(HttpStatus.CREATED).body("장바구니가 담겼습니다.");
     }
 
-    //장바구니 조회
+    //장바구니 조회 및 저장
     @GetMapping("/product/basketList")
     public ResponseEntity<BasketResponseDto> basketList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         BasketResponseDto basketResponseDto = basketService.basketList(userDetails);

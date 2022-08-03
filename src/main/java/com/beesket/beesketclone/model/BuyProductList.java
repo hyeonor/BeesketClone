@@ -5,6 +5,8 @@ import lombok.*;
 import org.hibernate.mapping.ToOne;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +25,9 @@ public class BuyProductList {
 
     @Column(nullable = false)
     private int count;
+
+    @Column(nullable = false)
+    private String imgUrl;
 
     @JsonIgnore
     @ManyToOne
