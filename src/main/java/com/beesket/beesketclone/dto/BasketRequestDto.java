@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class BasketProductDto {
+public class BasketRequestDto {
     private Long productId;
     private int count;
 }

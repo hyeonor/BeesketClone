@@ -1,6 +1,6 @@
 package com.beesket.beesketclone.controller;
 
-import com.beesket.beesketclone.dto.BasketProductDto;
+import com.beesket.beesketclone.dto.BasketRequestDto;
 import com.beesket.beesketclone.dto.BasketResponseDto;
 import com.beesket.beesketclone.security.UserDetailsImpl;
 import com.beesket.beesketclone.service.BasketService;
@@ -18,16 +18,17 @@ public class BasketController {
 
     //장바구니 담기
     @PostMapping("/product/basketList")
-    public ResponseEntity saveBasket(@RequestBody BasketProductDto basketProductDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        basketService.saveBasket(basketProductDto, userDetails);
-        return new ResponseEntity("장바구니가 담겼습니다.", HttpStatus.OK);
+    public ResponseEntity<String> saveBasket(@RequestBody BasketRequestDto basketRequestDto,
+                                             @AuthenticationPrincipal UserDetailsImpl userDetails){
+        basketService.saveBasket(basketRequestDto, userDetails);
+        return ResponseEntity.status(HttpStatus.CREATED).body("장바구니가 담겼습니다.");
     }
 
     //장바구니 조회 및 저장
     @GetMapping("/product/basketList")
-    public ResponseEntity basketList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<BasketResponseDto> basketList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         BasketResponseDto basketResponseDto = basketService.basketList(userDetails);
-        return new ResponseEntity(basketResponseDto, HttpStatus.OK);
+        return ResponseEntity.ok().body(basketResponseDto);
     }
 
 }

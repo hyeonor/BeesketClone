@@ -1,6 +1,7 @@
 package com.beesket.beesketclone.service;
 
 import com.beesket.beesketclone.dto.BasketProductDto;
+import com.beesket.beesketclone.dto.BasketRequestDto;
 import com.beesket.beesketclone.dto.BasketResponseDto;
 import com.beesket.beesketclone.model.Basket;
 import com.beesket.beesketclone.model.BuyProductList;
@@ -31,7 +32,7 @@ public class BasketService {
 
     //장바구니 담기
     @Transactional
-    public void saveBasket(BasketProductDto basketProductDto, UserDetailsImpl userDetails) {
+    public void saveBasket(BasketRequestDto basketRequestDto, UserDetailsImpl userDetails) {
 
         Basket basket = basketRepository.findByUser_Id(userDetails.getUser().getId()); //나중에 예외처리 하기
 
@@ -51,19 +52,19 @@ public class BasketService {
                 () -> new IllegalArgumentException("회원이 존재하지 않습니다.")
         );
 
-        Product product = productRepository.findById(basketProductDto.getProductId()).orElseThrow(
+        Product product = productRepository.findById(basketRequestDto.getProductId()).orElseThrow(
                 () -> new IllegalArgumentException("상품이 존재하지 않습니다.")
         );
 
-        BuyProductList find = buyProductListRepository.findByProduct_IdAndBasket(basketProductDto.getProductId(),basket);
+        BuyProductList find = buyProductListRepository.findByProduct_IdAndBasket(basketRequestDto.getProductId(),basket);
 
         if (find != null){
-            find.setCount(basketProductDto.getCount()+find.getCount());
+            find.setCount(basketRequestDto.getCount()+find.getCount());
         } else {
             BuyProductList buyProductList = BuyProductList.builder()
                     .basket(basket)
                     .product(product)
-                    .count(basketProductDto.getCount())
+                    .count(basketRequestDto.getCount())
                     .build();
 
             buyProductListRepository.save(buyProductList);
@@ -98,7 +99,10 @@ public class BasketService {
         int sumPrice = 0;
         int allCount = 0;
 
+
+
         for (BuyProductList list : buyProductList) {
+            BasketProductDto basketProductDto = new BasketProductDto(list);
             int price = list.getProduct().getPrice();
             int count = list.getCount();
             allCount += count;
