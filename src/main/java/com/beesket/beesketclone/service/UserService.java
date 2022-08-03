@@ -72,9 +72,10 @@ public class UserService {
     }
 
     public User userInfo(UserDetailsImpl userDetails) {
+        Long id = userDetails.getUser().getId();
         String email = userDetails.getUser().getEmail();
         String name = userDetails.getUser().getName();
-        User userInfo = new User(email, name);
+        User userInfo = new User(id, email, name);
         return userInfo;
     }
 

@@ -22,9 +22,6 @@ public class Product {
     private List<Comment> comment = new ArrayList<>();
 
     @Column(nullable = false)
-    private String imgUrl; //이미지 URL
-
-    @Column(nullable = false)
     private String productName; //제품 이름
 
     @Column(nullable = false)

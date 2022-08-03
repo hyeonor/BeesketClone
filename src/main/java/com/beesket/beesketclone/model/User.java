@@ -34,7 +34,8 @@ public class User extends Timestamped{
         this.name = name;
     }
 
-    public User(String email, String name) {
+    public User(Long id, String email, String name) {
+        this.id = id;
         this.email = email;
         this.name = name;
     }

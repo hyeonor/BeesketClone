@@ -26,9 +26,6 @@ public class Basket{
     private List<BuyProductList> buyProductList;
 
     @Column(nullable = false)
-    private int count;
-
-    @Column(nullable = false)
     private int deliveryFee;
 
     @Column(nullable = false)

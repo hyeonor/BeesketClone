@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
     private final ProductService productService;
 
-    //제품 페이지
+    //제품 페이지 메인 페이지 조회
     @GetMapping("/product")
     public ResponseEntity<ProductResponseDto> getProducts(@RequestParam("categoryId") String categoryId, @RequestParam("page") int page){
         ProductResponseDto products = productService.showProduct(categoryId, page - 1);
