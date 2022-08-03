@@ -25,8 +25,9 @@ public class BasketController {
 
     //장바구니 조회
     @GetMapping("/product/basketList")
-    public BasketResponseDto basketList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return basketService.basketList(userDetails);
+    public ResponseEntity basketList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        BasketResponseDto basketResponseDto = basketService.basketList(userDetails);
+        return new ResponseEntity(basketResponseDto, HttpStatus.OK);
     }
 
 }
