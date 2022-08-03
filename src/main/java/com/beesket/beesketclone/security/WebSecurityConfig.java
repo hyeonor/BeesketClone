@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -59,27 +60,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.authorizeRequests()
                 // api 요청 접근허용
-                .antMatchers("/user/**").permitAll()
-                .antMatchers("/product/**").permitAll()
+//                .antMatchers("/user/**").permitAll()
+//                .antMatchers("/product/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("**").permitAll()
-                .antMatchers("/").permitAll()
-                //.antMatchers(HttpMethod.GET,"/api/contents").permitAll()
-                //.antMatchers(HttpMethod.GET, "/api/reply/**").permitAll()
+//                .antMatchers("**").permitAll()
+//                .antMatchers("/").permitAll()
+                .antMatchers("product/basketList").authenticated()
+//                .antMatchers(HttpMethod.POST,"/product/basketList").authenticated()
+//                .antMatchers(HttpMethod.GET, "/api/reply/**").permitAll()
 
                 // 그 외 모든 요청허용
                 //슬기님이 밑에 permitAll()말고 이거쓰라하심
-                .anyRequest().authenticated()
-                //.anyRequest().permitAll()
+                .anyRequest().permitAll()
+//                .anyRequest().permitAll()
                 .and()
-                //.formLogin().loginProcessingUrl("/user/login")
-                //.and()
+//                .formLogin().loginProcessingUrl("/user/login")
+//                .and()
                 // 토큰을 활용하면 세션이 필요 없으므로 STATELESS로 설정하여 Session을 사용하지 않는다.
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
 
                 .addFilterBefore(new FormLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthorizationFilter(authenticationManager(), userRepository), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthorizationFilter(authenticationManager(), userRepository), UsernamePasswordAuthenticationFilter.class)
+        ;
     }
 
     @Bean
@@ -91,7 +94,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.addExposedHeader("Authorization");
         configuration.setAllowCredentials(true) ;
-        // configuration.addAllowedOriginPattern("");
+        //  configuration.addAllowedOriginPattern("");
         // configuration.addAllowedOrigin("프론트 주소"); // 배포 시
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
