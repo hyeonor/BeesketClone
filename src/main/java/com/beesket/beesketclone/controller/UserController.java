@@ -31,6 +31,7 @@ public class UserController {
         }
 
     }
+    //로그인 유저 정보
     @GetMapping("user/login/auth")
     public User userDetails(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.userInfo(userDetails);
