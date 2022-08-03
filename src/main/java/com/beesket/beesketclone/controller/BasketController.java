@@ -2,7 +2,6 @@ package com.beesket.beesketclone.controller;
 
 import com.beesket.beesketclone.dto.BasketRequestDto;
 import com.beesket.beesketclone.dto.BasketResponseDto;
-import com.beesket.beesketclone.model.Basket;
 import com.beesket.beesketclone.security.UserDetailsImpl;
 import com.beesket.beesketclone.service.BasketService;
 import lombok.RequiredArgsConstructor;
