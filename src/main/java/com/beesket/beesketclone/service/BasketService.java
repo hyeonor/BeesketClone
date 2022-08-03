@@ -12,6 +12,7 @@ import com.beesket.beesketclone.repository.ProductRepository;
 import com.beesket.beesketclone.repository.UserRepository;
 import com.beesket.beesketclone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Component //class를 bean으로 만듦
 @Service
 @RequiredArgsConstructor
 public class BasketService {
@@ -32,6 +34,20 @@ public class BasketService {
     @Transactional
     public void saveBasket(BasketProductDto basketProductDto, UserDetailsImpl userDetails) {
 
+        Basket basket = basketRepository.findByUser_Id(userDetails.getUser().getId()); //나중에 예외처리 하기
+
+        if(basket == null){
+            basket = Basket.builder()
+                    .user(userDetails.getUser())
+                    .buyProductList(null)
+                    .count(0)
+                    .deliveryFee(0)
+                    .sumPrice(0)
+                    .build();
+
+            basketRepository.save(basket);
+        }
+
         User user = userRepository.findByEmail(userDetails.getUsername()).orElseThrow(
                 () -> new IllegalArgumentException("회원이 존재하지 않습니다.")
         );
@@ -40,13 +56,13 @@ public class BasketService {
                 () -> new IllegalArgumentException("상품이 존재하지 않습니다.")
         );
 
-        Optional<BuyProductList> find = buyProductListRepository.findByProduct_IdAndUser_Id(basketProductDto.getProductId(),user.getId());
+        BuyProductList find = buyProductListRepository.findByProduct_IdAndBasket(basketProductDto.getProductId(),basket);
 
-        if (find.isPresent()){
-            find.get().setCount(basketProductDto.getCount()+find.get().getCount());
+        if (find != null){
+            find.setCount(basketProductDto.getCount()+find.getCount());
         } else {
             BuyProductList buyProductList = BuyProductList.builder()
-                    .user(user)
+                    .basket(basket)
                     .product(product)
 //                    .email(user.getEmail())
                     .count(basketProductDto.getCount())
@@ -63,14 +79,30 @@ public class BasketService {
                 () -> new NullPointerException("회원이 존재하지 않습니다.")
         );
 
-        List<BuyProductList> buyProductList = buyProductListRepository.findByUser_Id(user.getId());
+        Basket basket = basketRepository.findByUser_Id(userDetails.getUser().getId());
+//  회원이 아닐 때
+        if(basket == null){
+            basket = Basket.builder()
+                    .user(userDetails.getUser())
+                    .buyProductList(null)
+                    .count(0)
+                    .deliveryFee(0)
+                    .sumPrice(0)
+                    .build();
+
+            basketRepository.save(basket);
+        }
+
+        List<BuyProductList> buyProductList = buyProductListRepository.findByBasket(basket);
 
         int deliverFee = 0;
         int sumPrice = 0;
+        int allCount = 0;
 
         for (BuyProductList list : buyProductList) {
             int price = list.getProduct().getPrice();
             int count = list.getCount();
+            allCount += count;
             int sum = price * count;
             sumPrice += sum;
         }
@@ -78,23 +110,26 @@ public class BasketService {
         if (sumPrice < 70000) {
             deliverFee += 3000;
         }
+//        basket = Basket.builder()
+//                .user(user)
+//                .buyProductList(buyProductList)
+//                .sumPrice(sumPrice)
+//                .deliveryFee(deliverFee)
+//                .build();
+        basket.setCount(allCount);
+        basket.setSumPrice(sumPrice);
+        basket.setDeliveryFee(deliverFee);
+        basket.setBuyProductList(buyProductList);
 
-        Basket basket = Basket.builder()
-                .user(user)
-                .buyProductList(buyProductList)
-                .sumPrice(sumPrice)
-                .deliveryFee(deliverFee)
-                .build();
-
-        Basket findId = basketRepository.findByUser_Id(user.getId());
-
-        if (findId == null) {
-            basketRepository.save(basket);
-        }else {
-            basket.setBuyProductList(basket.getBuyProductList());
-            basket.setDeliveryFee(basket.getDeliveryFee());
-            basket.setSumPrice(basket.getSumPrice());
-        }
+//        Basket findId = basketRepository.findByUser_Id(user.getId());
+//
+//        if (findId == null) {
+//            basketRepository.save(basket);
+//        }else {
+//            basket.setBuyProductList(basket.getBuyProductList());
+//            basket.setDeliveryFee(basket.getDeliveryFee());
+//            basket.setSumPrice(basket.getSumPrice());
+//        }
         return new BasketResponseDto(basket);
     }
 }

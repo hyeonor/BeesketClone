@@ -14,7 +14,7 @@ import java.util.List;
 public class BasketResponseDto {
     private Long basketId;
     private User user;
-    private List<BasketDto> buyProductList;
+    private List<BuyProductList> buyProductList;
     private int deliveryFee;
     private int sumPrice;
 
@@ -23,15 +23,7 @@ public class BasketResponseDto {
         this.setUser(basket.getUser());
         this.setDeliveryFee(basket.getDeliveryFee());
         this.setSumPrice(basket.getSumPrice());
-        List<BasketDto> basketDtoList = new ArrayList<>();
-        for(BuyProductList buyProductList : basket.getBuyProductList()){
-            BasketDto basketDto = BasketDto.builder()
-                    .product(buyProductList.getProduct())
-                    .deliveryFee(buyProductList.getBasket().getDeliveryFee())
-                    .build();
-            basketDtoList.add(basketDto);
-        }
-        this.setBuyProductList(basketDtoList);
+        this.setBuyProductList(basket.getBuyProductList());
     }
 
 }
