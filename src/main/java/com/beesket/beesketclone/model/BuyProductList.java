@@ -17,13 +17,6 @@ public class BuyProductList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToOne
-//    @JoinColumn(name = "userId")
-//    private User user;
-
-//    @Column(nullable = false)
-//    private String email;
-
     @ManyToOne
     @JoinColumn(name = "productId")
     private Product product;
