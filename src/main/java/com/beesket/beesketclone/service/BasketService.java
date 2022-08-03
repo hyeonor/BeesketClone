@@ -103,7 +103,6 @@ public class BasketService {
 
 
         for (BuyProductList list : buyProductList) {
-            BasketProductDto basketProductDto = new BasketProductDto(list);
             int price = list.getProduct().getPrice();
             int count = list.getCount();
             allCount += count;
