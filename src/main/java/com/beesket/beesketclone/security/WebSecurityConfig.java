@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -59,16 +60,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.authorizeRequests()
                 // api 요청 접근허용
-                .antMatchers("/user/**").permitAll()
+//                .antMatchers("/user/**").permitAll()
+//                .antMatchers("/product/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("**").permitAll()
-                .antMatchers("/").permitAll()
-//                .antMatchers(HttpMethod.GET,"/api/contents").permitAll()
+//                .antMatchers("**").permitAll()
+//                .antMatchers("/").permitAll()
+                .antMatchers("product/basketList").authenticated()
+//                .antMatchers(HttpMethod.POST,"/product/basketList").authenticated()
 //                .antMatchers(HttpMethod.GET, "/api/reply/**").permitAll()
 
                 // 그 외 모든 요청허용
                 //슬기님이 밑에 permitAll()말고 이거쓰라하심
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
 //                .anyRequest().permitAll()
                 .and()
 //                .formLogin().loginProcessingUrl("/user/login")
