@@ -52,7 +52,7 @@ public class BasketService {
 
         BuyProductList find = buyProductListRepository.findByProduct_IdAndBasket(basketRequestDto.getProductId(),basket);
 
-        Image image = imageRepository.findOneByProduct(product);
+        List<Image> image = imageRepository.findAllByProductId(product.getId());
 
         if (find != null){
             find.setCount(basketRequestDto.getCount()+find.getCount());
@@ -60,13 +60,12 @@ public class BasketService {
             BuyProductList buyProductList = BuyProductList.builder()
                     .basket(basket)
                     .product(product)
-                    .imgUrl(image.getImgUrl())
+                    .imgUrl(image.get(0).getImgUrl())
                     .count(basketRequestDto.getCount())
                     .build();
 
             buyProductListRepository.save(buyProductList);
         }
-
     }
 
     //장바구니 조회 및 저장
