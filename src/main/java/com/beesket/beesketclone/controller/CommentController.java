@@ -33,10 +33,10 @@ public class CommentController {
     // 댓글리스트
     @GetMapping("product/{productId}/comment")
     public ResponseEntity<CommentWrapper<List<CommentResponseDto>>> listComment(@PathVariable Long productId) {
-        List<CommentResponseDto> dtoList = commentService.listComment(productId);
+        List<CommentResponseDto> commentList = commentService.listComment(productId);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(new CommentWrapper<>(dtoList));
+                .body(new CommentWrapper<>(commentList));
     }
 
     @Data
