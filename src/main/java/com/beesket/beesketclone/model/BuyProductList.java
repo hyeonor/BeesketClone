@@ -19,9 +19,6 @@ public class BuyProductList {
     @JoinColumn(name = "userId")
     private User user;
 
-    @Column(nullable = false)
-    private String email;
-
     @OneToOne
     @JoinColumn(name = "productId")
     private Product product;
@@ -33,4 +30,6 @@ public class BuyProductList {
     @JoinColumn(name = "basketId")
     private Basket basket;
 
+    @Column(nullable = false)
+    private int deliveryFee;
 }

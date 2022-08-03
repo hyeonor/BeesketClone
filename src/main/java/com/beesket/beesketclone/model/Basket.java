@@ -14,7 +14,7 @@ import java.util.List;
 public class Basket extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long basketId;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "userId")
@@ -22,9 +22,6 @@ public class Basket extends Timestamped {
 
     @OneToMany(mappedBy = "basket")
     private List<BuyProductList> buyProductList;
-
-    @Column(nullable = false)
-    private int count;
 
     @Column(nullable = false)
     private int deliveryFee;

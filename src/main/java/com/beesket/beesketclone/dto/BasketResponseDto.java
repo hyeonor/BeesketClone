@@ -19,7 +19,7 @@ public class BasketResponseDto {
     private int sumPrice;
 
     public BasketResponseDto(Basket basket){
-        this.setBasketId(basket.getBasketId());
+        this.setBasketId(basket.getId());
         this.setUser(basket.getUser());
         this.setDeliveryFee(basket.getDeliveryFee());
         this.setSumPrice(basket.getSumPrice());
