@@ -19,9 +19,11 @@ public class Comment extends Timestamped{
     @Column(name = "comment_id")
     private Long commentId;
 
+    // 댓글 내용
     @Column
     private String content;
 
+    //별점
     @Column
     private int scope;
 

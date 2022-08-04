@@ -23,19 +23,23 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Comment> comment = new ArrayList<>();
 
+    //제품 이름
     @Column(nullable = false)
-    private String productName; //제품 이름
+    private String productName;
 
+    //제품 가격
     @Column(nullable = false)
-    private int price; //제품 가격
+    private int price;
 
+    //카테고리 이름
     @Column(nullable = false)
-    private String categoryName; //카테고리 이름
+    private String categoryName;
 
+    //제품 상세 설명
     @Column(nullable = false)
-    private String productDetail; //카테고리 이름
+    private String productDetail;
 
-    // Product에서 Comment에 대한 정보 넣기.
+    // Product에서 Comment에 대한 정보 넣기
     public void addComment(Comment comment) {
         this.comment.add(comment);
     }
