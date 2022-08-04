@@ -26,6 +26,7 @@ public class CommentService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
+    // 구매평 작성 저장
     @Transactional
     public void saveComment(String email, Long productId, CommentRequestDto commentRequestDto) {
         Product product = productRepository.findById(productId).orElseThrow(
@@ -41,6 +42,20 @@ public class CommentService {
         commentRepository.save(Comment.createComment(user, content, product, scope));
     }
 
+    //구매평 리스트 조회
+    public List<CommentResponseDto> listComment(Long productId) {
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+
+        List<Comment> commentList = commentRepository.findAllByProductIdOrderByCreatedAtDesc(productId);
+
+        for (Comment comment : commentList) {
+            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
+            commentResponseDtoList.add(commentResponseDto);
+        }
+        return commentResponseDtoList;
+    }
+
+    // 구매평 삭제
     @Transactional
     public void deleteComment(Long commentId, UserDetailsImpl userDetails) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
@@ -52,17 +67,5 @@ public class CommentService {
         }else {
             throw new CustomException(ErrorCode.COMMENT_LOGIN_CHECK_CODE);
         }
-    }
-
-    public List<CommentResponseDto> listComment(Long productId) {
-        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
-
-        List<Comment> commentList = commentRepository.findAllByProductIdOrderByCreatedAtDesc(productId);
-
-        for (Comment comment : commentList) {
-            CommentResponseDto commentResponseDto = new CommentResponseDto(comment);
-            commentResponseDtoList.add(commentResponseDto);
-        }
-        return commentResponseDtoList;
     }
 }
