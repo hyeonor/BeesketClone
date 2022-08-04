@@ -10,6 +10,9 @@
 <h3>2022-07-29 ~ 2022-08-04</h3>
 <h3>🌟팀원</h3>
 
+![image](https://user-images.githubusercontent.com/107676736/182849424-21d1ffd3-ad2e-4412-981f-6f975abeb81b.png)
+
+
 | 이름 | 주특기 | Github 주소 |
 | :------------: | :-------------: | :------------- |
 | 정현아 | BE | https://github.com/hyeonor  |
