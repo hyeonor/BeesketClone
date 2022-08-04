@@ -1,6 +1,5 @@
 package com.beesket.beesketclone.service;
 
-import com.beesket.beesketclone.dto.LoginRequestDto;
 import com.beesket.beesketclone.dto.SignupRequestDto;
 import com.beesket.beesketclone.exception.CustomException;
 import com.beesket.beesketclone.exception.ErrorCode;
@@ -54,21 +53,6 @@ public class UserService {
         userRepository.save(user);
         return error;
 
-    }
-
-    //로그인
-    public Boolean login(LoginRequestDto loginRequestDto) {
-        User user = userRepository.findByEmail(loginRequestDto.getEmail())
-                .orElse(null);
-
-        if (user != null) {
-            if (passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())) {
-                return false;
-            }
-        } else {
-            return false;
-        }
-        return true;
     }
 
     public User userInfo(UserDetailsImpl userDetails) {
