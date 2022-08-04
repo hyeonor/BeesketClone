@@ -51,7 +51,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors();
@@ -60,23 +59,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.authorizeRequests()
                 // api 요청 접근허용
-//                .antMatchers("/user/**").permitAll()
-//                .antMatchers("/product/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-//                .antMatchers("**").permitAll()
-//                .antMatchers("/").permitAll()
                 .antMatchers("product/basketList").authenticated()
                 .antMatchers(HttpMethod.POST,"product/comment").authenticated()
-//                .antMatchers(HttpMethod.POST,"/product/basketList").authenticated()
-//                .antMatchers(HttpMethod.GET, "/api/reply/**").permitAll()
+                .antMatchers(HttpMethod.DELETE,"product/comment").authenticated()
 
                 // 그 외 모든 요청허용
                 //슬기님이 밑에 permitAll()말고 이거쓰라하심
                 .anyRequest().permitAll()
-//                .anyRequest().permitAll()
                 .and()
-//                .formLogin().loginProcessingUrl("/user/login")
-//                .and()
+
                 // 토큰을 활용하면 세션이 필요 없으므로 STATELESS로 설정하여 Session을 사용하지 않는다.
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
@@ -94,8 +86,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.addExposedHeader("Authorization");
-        configuration.setAllowCredentials(true) ;
-        //  configuration.addAllowedOriginPattern("");
+        configuration.setAllowCredentials(true);
+        // configuration.addAllowedOriginPattern("");
         // configuration.addAllowedOrigin("프론트 주소"); // 배포 시
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

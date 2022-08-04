@@ -12,7 +12,8 @@ public enum ErrorCode {
     EMAIL_FORM_CODE(400, "C002", "이메일을 정확히 입력해주세요"),
     //response.message -> then
     PASSWORD_CHECK_CODE(400, "C003", "패스워드와 패스워드 확인이 일치하지 않습니다"),
-    PASSWORD_LENGTH_CODE(400, "C004", "패스워드는 4글자 이상 입력해주세요");
+    PASSWORD_LENGTH_CODE(400, "C004", "패스워드는 4글자 이상 입력해주세요"),
+    LOGIN_CHECK_CODE(400,"C005", "로그인을 해주세요.");
 
 //    LOGIN_CODE(400, "C005", "아이디 비밀번호를 확인해 주세요");
 
