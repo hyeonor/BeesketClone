@@ -10,7 +10,7 @@
 <h3>2022-07-29 ~ 2022-08-04</h3>
 <h3>🌟팀원</h3>
 
-![image](https://user-images.githubusercontent.com/107676736/182849424-21d1ffd3-ad2e-4412-981f-6f975abeb81b.png)
+![image](https://user-images.githubusercontent.com/107676736/182854933-7fa30a0d-f253-4488-aa00-7fe0fbfed4a7.png)
 
 
 | 이름 | 주특기 | Github 주소 |
