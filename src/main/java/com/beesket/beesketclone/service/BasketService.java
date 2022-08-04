@@ -1,6 +1,6 @@
 package com.beesket.beesketclone.service;
 
-import com.beesket.beesketclone.dto.BasketProductDto;
+
 import com.beesket.beesketclone.dto.BasketRequestDto;
 import com.beesket.beesketclone.dto.BasketResponseDto;
 import com.beesket.beesketclone.model.Basket;
@@ -103,7 +103,6 @@ public class BasketService {
 
 
         for (BuyProductList list : buyProductList) {
-            BasketProductDto basketProductDto = new BasketProductDto(list);
             int price = list.getProduct().getPrice();
             int count = list.getCount();
             allCount += count;

@@ -1,6 +1,8 @@
 package com.beesket.beesketclone.controller;
 
 import com.beesket.beesketclone.dto.SignupRequestDto;
+import com.beesket.beesketclone.exception.CustomException;
+import com.beesket.beesketclone.exception.ErrorCode;
 import com.beesket.beesketclone.model.User;
 import com.beesket.beesketclone.security.UserDetailsImpl;
 import com.beesket.beesketclone.service.UserService;
@@ -22,18 +24,21 @@ public class UserController {
 
     //회원가입 요청 처리
     @PostMapping("/user/signup")
-    public String registerUser(@Valid @RequestBody SignupRequestDto requestDto){
+    public String registerUser(@Valid @RequestBody SignupRequestDto requestDto) {
         String res = userService.registerUser(requestDto);
-        if(res.equals("")){
+        if (res.equals("")) {
             return "회원가입 성공";
-        }else{
+        } else {
             return res;
         }
 
     }
+
     //로그인 유저 정보
     @GetMapping("user/login/auth")
     public User userDetails(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.userInfo(userDetails);
     }
+
+
 }
