@@ -8,6 +8,7 @@ import com.beesket.beesketclone.model.User;
 import com.beesket.beesketclone.repository.CommentRepository;
 import com.beesket.beesketclone.repository.ProductRepository;
 import com.beesket.beesketclone.repository.UserRepository;
+import com.beesket.beesketclone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,19 @@ public class CommentService {
         int scope = commentRequestDto.getScope();
 
         commentRepository.save(Comment.createComment(user, content, product, scope));
+    }
+
+    @Transactional
+    public void deleteComment(Long commentId, UserDetailsImpl userDetails) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new IllegalArgumentException("해당하는 댓글을 찾을 수 없습니다."));
+
+        Long userId = userDetails.getUser().getId();
+        if(userId.equals(comment.getUser().getId())) {
+            commentRepository.deleteById(commentId);
+        }else {
+            throw new IllegalArgumentException("댓글 삭제할 권한이 없습니다");
+        }
     }
 
     public List<CommentResponseDto> listComment(Long productId) {
