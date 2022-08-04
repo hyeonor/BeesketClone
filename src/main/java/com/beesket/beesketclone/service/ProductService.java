@@ -23,6 +23,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ImageRepository imageRepository;
 
+    //제품 메인 페이지 조회
     public ProductResponseDto showProduct(String categoryName, int page) {
         long totalCount;
         Page<Product> products;
@@ -37,13 +38,13 @@ public class ProductService {
             totalCount = productRepository.count();//제품 전체 개수
             products = productRepository.findAll(pageable);//제품 전체 불어오기
 
-            getProduct(products, ProductInformationDtoList);
+            getProduct(products, ProductInformationDtoList); //제품 정보 가져오기
 
         } else {
             totalCount = productRepository.countAllByCategoryName(categoryName);//카테코리별 제품 전체 개수
             products = productRepository.findAllByCategoryName(categoryName, pageable);//카테코리별 제품 불어오기
 
-            getProduct(products, ProductInformationDtoList);
+            getProduct(products, ProductInformationDtoList);//제품 정보 가져오기
         }
         productResponseDto.setProductInfo(ProductInformationDtoList);
         productResponseDto.setTotalCount((int)totalCount);
@@ -51,6 +52,7 @@ public class ProductService {
         return productResponseDto;
     }
 
+    //제품 정보 가져오기
     private void getProduct(Page<Product> products, List<ProductInformationDto> ProductInformationDtoList) {
 
         for(Product product : products) {
@@ -66,6 +68,7 @@ public class ProductService {
         }
     }
 
+    //상세 페이지 조회
     public ProductDetailDto showProductDetail(Long productId) {
         Product product = productRepository.findAllById(productId);
 
