@@ -38,7 +38,7 @@ Spring<br>
 JWT<br>
 MySQL<br>
 CORS<br>
-AWS EC2 (Ubuntu 18.04LTS)<br></h3>
+AWS EC2 (Ubuntu 18.04LTS)</h3>
 </br></br></br>
 
 
