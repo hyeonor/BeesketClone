@@ -15,7 +15,6 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
-//@CrossOrigin("http://localhost:3000")
 public class UserController {
 
     private final UserService userService;
@@ -31,12 +30,10 @@ public class UserController {
         }
 
     }
+
     //로그인 유저 정보
     @GetMapping("user/login/auth")
     public User userDetails(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.userInfo(userDetails);
     }
-
-
-
 }
