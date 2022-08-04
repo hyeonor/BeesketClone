@@ -18,7 +18,9 @@ public class ErrorResponse {
         this.code = code.getCode();
         this.message = code.getMessage();
     }
-    public static ErrorResponse of(ErrorCode code){     // 정적 메서드 -> 클래스가 메모리에 올라갈때 자동적으로 생성
+
+    // 정적 메서드 -> 클래스가 메모리에 올라갈때 자동적으로 생성
+    public static ErrorResponse of(ErrorCode code){
         // 인스턴스를 생성하지 않아도 호출 가능
         return new ErrorResponse(code);
     }
