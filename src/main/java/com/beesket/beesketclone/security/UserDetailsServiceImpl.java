@@ -19,7 +19,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     //로그인 시 이메일을 찾을 수 없을 때
     public UserDetailsImpl loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("이 " + email + " 이메일은 존재하지 않습니다."));
+                .orElseThrow(() -> new UsernameNotFoundException("이 " + email + "이메일은 존재하지 않습니다."));
 
         return new UserDetailsImpl(user);
     }

@@ -55,21 +55,21 @@ public class UserService {
         return error;
 
     }
-
-    //로그인
-    public Boolean login(LoginRequestDto loginRequestDto){
-        User user = userRepository.findByEmail(loginRequestDto.getEmail())
-                .orElse(null);
-
-        if(user != null){
-            if(passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())){
-                return false;
-            }
-        } else{
-            return false;
-        }
-        return true;
-    }
+//
+//    //로그인(JWT아님)
+//    public Boolean login(LoginRequestDto loginRequestDto){
+//        User user = userRepository.findByEmail(loginRequestDto.getEmail())
+//                .orElse(null);
+//
+//        if(user != null){
+//            if(passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())){
+//                return false;
+//            }
+//        } else{
+//            return false;
+//        }
+//        return true;
+//    }
 
     public User userInfo(UserDetailsImpl userDetails) {
         Long id = userDetails.getUser().getId();

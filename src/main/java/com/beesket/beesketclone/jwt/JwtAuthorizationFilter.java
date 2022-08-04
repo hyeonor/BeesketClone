@@ -48,29 +48,31 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
 
         //JWT토큰을 검증을 해서 정상적인 사용자인지 확인
-        //String jwtToken = request.getHeader("Authorization").replace("Bearer","");
+//        String jwtToken = request.getHeader("Authorization").replace("Bearer","");
         String email =
                 JWT.require(Algorithm.HMAC512("cos")).build().verify(jwtHeader).getClaim("email").asString();
 
 
         //서명이 정상적으로 됨
         if(email != null){
-        User user = userRepository.findByEmail(email).orElseThrow(
-                ()->new IllegalArgumentException("email이 없습니다.")
-        );
+            User user = userRepository.findByEmail(email).orElseThrow(
+                    ()->new IllegalArgumentException("email이 없습니다.")
+            );
 
             UserDetailsImpl userDetails = new UserDetailsImpl(user);
 
 
-        //JWT 토큰 서명을 통해 서명이 정상이면 Authentication 객체를 만들어준다.
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            //JWT 토큰 서명을 통해 서명이 정상이면 Authentication 객체를 만들어준다.
+            Authentication authentication =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-        //강제로 시큐리티의 세션에 접근하여 Authentication 객체 저장
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            //강제로 시큐리티의 세션에 접근하여 Authentication 객체 저장
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
             chain.doFilter(request,response);
         }
 
     }
+
+
 }

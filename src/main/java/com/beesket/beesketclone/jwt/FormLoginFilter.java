@@ -25,45 +25,45 @@ public class FormLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
 
-        //login 요청하면 로그인 시도를 위해 실행되는 함수
-        @Override
-        public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-            System.out.println("JwtAuthenticationFilter: 로그인 시도중");
+    //login 요청하면 로그인 시도를 위해 실행되는 함수
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        System.out.println("JwtAuthenticationFilter: 로그인 시도중");
 
-            //1.username, password 받아서
-            try {
+        //1.username, password 받아서
+        try {
 
-                ObjectMapper om = new ObjectMapper();
-                User user = om.readValue(request.getInputStream(), User.class); //유저 정보 담기
-                System.out.println(user);
-                System.out.println("=============================================");
+            ObjectMapper om = new ObjectMapper();
+            User user = om.readValue(request.getInputStream(), User.class); //유저 정보 담기
+            System.out.println(user);
+            System.out.println("=============================================");
 
-                UsernamePasswordAuthenticationToken authenticationToken =
-                        new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
+            UsernamePasswordAuthenticationToken authenticationToken =
+                    new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
 
-                //PrincipalDetailsService의 loadUserByUsername() 함수가 실행된 후 정상이면 authentication이 리턴됨
-                //DB에 있는 username과 password가 일치한다.
-
-
-                Authentication authentication =
-                       getAuthenticationManager().authenticate(authenticationToken);
+            //PrincipalDetailsService의 loadUserByUsername() 함수가 실행된 후 정상이면 authentication이 리턴됨
+            //DB에 있는 username과 password가 일치한다.
 
 
-                //authentication 객체가 session영역에 저장해야하고 그 방법이 return 해주면 됨
-                //리턴 이유는 권한 관리를 security가 대신 해주기 때문에 편하려고 하는거임
-                //굳이 JWT토큰을 사용하면서 세션을 만들 이유가 없음. 근데 단지 권한 처리때문에 session 넣어줍니다.
+            Authentication authentication =
+                    getAuthenticationManager().authenticate(authenticationToken);
 
 
-                return authentication;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //authentication 객체가 session영역에 저장해야하고 그 방법이 return 해주면 됨
+            //리턴 이유는 권한 관리를 security가 대신 해주기 때문에 편하려고 하는거임
+            //굳이 JWT토큰을 사용하면서 세션을 만들 이유가 없음. 근데 단지 권한 처리때문에 session 넣어줍니다.
 
-            return null;
+
+            return authentication;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        //attemptAuthentication실행 후 인증이 정상적으로 되었으면 successfulAuthentication 함수가 실행됨.
-        //JWT 토큰을 만들어서 request요청한 사용자에게 JWT토큰을 response해주면 됨.
+        return null;
+    }
+
+    //attemptAuthentication실행 후 인증이 정상적으로 되었으면 successfulAuthentication 함수가 실행됨.
+    //JWT 토큰을 만들어서 request요청한 사용자에게 JWT토큰을 response해주면 됨.
 
 
     @Override
@@ -74,7 +74,7 @@ public class FormLoginFilter extends UsernamePasswordAuthenticationFilter {
         //RSA방식은 아니고 Hash암호 방식
         String jwtToken = JWT.create()
                 .withSubject("cos토큰")
-                .withExpiresAt(new Date(System.currentTimeMillis()+(60000*60)))
+                .withExpiresAt(new Date(System.currentTimeMillis()+(60000*10)))
                 .withClaim("email",userDetails.getUser().getEmail())
                 .sign(Algorithm.HMAC512("cos"));
 
@@ -92,4 +92,3 @@ public class FormLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     }
 }
-

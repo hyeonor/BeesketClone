@@ -13,7 +13,7 @@ public class UserDetailsImpl implements UserDetails {
 
     public UserDetailsImpl(User user){ this.user = user; }
 
-  public User getUser(){return user;}
+    public User getUser(){return user;}
 
     //비밀번호
     @Override
