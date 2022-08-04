@@ -2,7 +2,6 @@ package com.beesket.beesketclone.service;
 
 import com.beesket.beesketclone.dto.BasketRequestDto;
 import com.beesket.beesketclone.dto.BasketResponseDto;
-import com.beesket.beesketclone.exception.CustomException;
 import com.beesket.beesketclone.model.*;
 import com.beesket.beesketclone.repository.*;
 import com.beesket.beesketclone.security.UserDetailsImpl;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
-import java.util.Objects;
 
 @Component //class를 bean으로 만듦
 @Service
