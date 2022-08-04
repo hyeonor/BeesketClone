@@ -2,6 +2,8 @@ package com.beesket.beesketclone.service;
 
 import com.beesket.beesketclone.dto.CommentRequestDto;
 import com.beesket.beesketclone.dto.CommentResponseDto;
+import com.beesket.beesketclone.exception.CustomException;
+import com.beesket.beesketclone.exception.ErrorCode;
 import com.beesket.beesketclone.model.Comment;
 import com.beesket.beesketclone.model.Product;
 import com.beesket.beesketclone.model.User;
@@ -48,7 +50,7 @@ public class CommentService {
         if(userId.equals(comment.getUser().getId())) {
             commentRepository.deleteById(commentId);
         }else {
-            throw new IllegalArgumentException("댓글 삭제할 권한이 없습니다");
+            throw new CustomException(ErrorCode.COMMENT_LOGIN_CHECK_CODE);
         }
     }
 
