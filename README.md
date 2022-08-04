@@ -19,7 +19,7 @@
 [BeesketStudioClone 사이트](http://clonecoding-beesketstudio.s3-website.ap-northeast-2.amazonaws.com/)
 
 # 🎬데모 영상 링크
-데모영상 바로가기
+[데모영상 바로가기](https://www.youtube.com/watch?v=m1xxRSVzEpw)
 
 # 📝노션 설계 페이지
 [노션 바로가기](https://www.notion.so/SA-1-271ebc4df43e4d01908ca319d0c85adf)
