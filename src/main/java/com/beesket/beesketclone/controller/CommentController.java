@@ -19,7 +19,7 @@ import java.util.List;
 public class CommentController {
     private CommentService commentService;
 
-    // 댓글작성
+    // 구매평 작성
     @PostMapping("product/{productId}/comment")
     public ResponseEntity<Void> saveComment(@PathVariable Long productId,
                                             @AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -29,7 +29,7 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
-    // 댓글리스트 조회
+    // 구매평 리스트 조회
     @GetMapping("product/{productId}/comment")
     public ResponseEntity<CommentWrapper<List<CommentResponseDto>>> listComment(@PathVariable Long productId) {
         List<CommentResponseDto> commentList = commentService.listComment(productId);
@@ -38,7 +38,7 @@ public class CommentController {
                 .body(new CommentWrapper<>(commentList));
     }
 
-    //댓글 삭제
+    // 구매평 삭제
     @DeleteMapping("product/{commentId}/comment")
     public ResponseEntity<String> deleteComment(@PathVariable Long commentId,
                                               @AuthenticationPrincipal UserDetailsImpl userDetails) {
