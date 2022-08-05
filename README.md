@@ -12,19 +12,38 @@
 
 ![image](https://user-images.githubusercontent.com/107676736/182854933-7fa30a0d-f253-4488-aa00-7fe0fbfed4a7.png)
 
+<table>
+  <tr>
+    <td colspan="3", align=center>Back-End</td>
+    <td colspan="4", align=center>Front-End</td>
+  </tr>
+  <tr>
+    <td align=center>정현아</td>
+    <td align=center>김하늘</td>
+    <td align=center>배소정</td>
+    <td align=center>조현오</td>
+    <td align=center>이은형</td>
+  </tr>
+  <tr>
+    <td align=center><img src="https://img.shields.io/badge/Springboot-6DB33F?style=flat-square&logo=Springboot&logoColor=white"/></td>
+    <td align=center><img src="https://img.shields.io/badge/Springboot-6DB33F?style=flat-square&logo=Springboot&logoColor=white"/></td>
+    <td align=center><img src="https://img.shields.io/badge/Springboot-6DB33F?style=flat-square&logo=Springboot&logoColor=white"/></td>
+    <td align=center><img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/></td>
+    <td align=center><img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/></td>
+  </tr>
+  <tr>
+    <td align=center><a href="https://github.com/hyeonor">깃허브 링크</a></td>
+    <td align=center><a href="https://github.com/ha-neu1">깃허브 링크</a></td>
+    <td align=center><a href="https://github.com/sso3o-Bae">깃허브 링크</a></td>
+    <td align=center><a href="https://github.com/letsjo">깃허브 링크</a></td>
+    <td align=center><a href="https://github.com/ondoo">깃허브 링크</a></td>
+  </tr>
+</table>
 
-| 이름 | 주특기 | Github 주소 |
-| :------------: | :-------------: | :------------- |
-| 정현아 | BE | https://github.com/hyeonor  |
-| 김하늘 | BE | https://github.com/ha-neu1  |
-| 배소정 | BE | https://github.com/sso3o-Bae  |
-| 조현오 | FE | https://github.com/letsjo  |
-| 이은형 | FE | https://github.com/ondoo  |
 
-
-김하늘 : 장바구니 관련 기능 담당<br>
-배소정 : 로그인/회원가입 관련 기능 담당<br>
-정현아 : 게시글 관련 기능 담당<br>
+* 김하늘 : 장바구니 관련 기능 담당<br>
+* 배소정 : 로그인/회원가입 관련 기능 담당<br>
+* 정현아 : 게시글 관련 기능 담당<br>
 </br></br></br>
 
 # 🌎Website
@@ -36,7 +55,7 @@
 </br></br></br>
 
 # 📝노션 설계 페이지
-[노션 바로가기](https://www.notion.so/SA-1-271ebc4df43e4d01908ca319d0c85adf)
+[노션 바로가기](https://mud-puppet-22e.notion.site/SA-1-271ebc4df43e4d01908ca319d0c85adf)
 </br></br></br>
 
 # 📋와이어 프레임
