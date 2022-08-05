@@ -72,4 +72,5 @@ AWS EC2 (Ubuntu 18.04LTS)</h3>
 </br></br>
 
 # 🔗API 상세
-![API](https://user-images.githubusercontent.com/107676736/183016325-89d0dbe7-d4f4-4721-a064-22c385c37637.png)
+![AIP](https://user-images.githubusercontent.com/107676736/183017907-8536b637-f8e1-4839-8871-a0f0115f466f.png)
+
