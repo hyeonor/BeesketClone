@@ -63,7 +63,7 @@
 </br></br></br>
 
 # 🛠Back-end 기술 스택 및 개발 환경 🔨
-<h3>JAVA<br>
+<h3>JAVA 8<br>
 Spring Boot<br>
 JWT<br>
 MySQL<br>
