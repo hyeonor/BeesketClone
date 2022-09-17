@@ -64,9 +64,10 @@
 
 # 🛠Back-end 기술 스택 및 개발 환경 🔨
 <h3>JAVA<br>
-Spring<br>
+Spring Boot<br>
 JWT<br>
 MySQL<br>
+Spring Security<br>
 CORS<br>
 AWS EC2 (Ubuntu 18.04LTS)</h3>
 </br></br>
