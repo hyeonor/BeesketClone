@@ -70,7 +70,6 @@ JWT<br>
 MySQL<br>
 Amazon S3<br>
 Spring Security<br>
-CORS<br>
 Github<br>
 Ubuntu<br>
 AWS EC2 (Ubuntu 18.04LTS)</h3>
